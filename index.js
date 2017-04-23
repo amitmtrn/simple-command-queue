@@ -1,3 +1,4 @@
+const _ = require('lodash');
 
 class CommandQueue {
   constructor({initialQueue = [], timing = 2000, agregator = (a) => a, executor: _.noop} = {}) {

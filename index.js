@@ -14,7 +14,7 @@ class CommandQueue {
 
   _exec() {
     if(this._queue.length <= 0)
-      return;
+      return setTimeout(this._exec.bind(this), this._timing);
 
     this._executor(this._queue.shift());
 

@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 class CommandQueue {
-  constructor({initialQueue = [], timing = 2000, agregator = null, executor: _.noop} = {}) {
+  constructor({initialQueue = [], timing = 2000, agregator = null, executor = _.noop} = {}) {
     if(!_.isArray(initialQueue)) throw new Error('initialQueue should be array');
 
     this._queue = initialQueue;
@@ -23,10 +23,11 @@ class CommandQueue {
 
   push(item) {
     this._queue.push(item);
-    this._agragate();
+
+    this._aggregate();
   }
 
-  _agregate() {
+  _aggregate() {
     if(_.isNull(this._agregator))
       return;
 
@@ -35,3 +36,5 @@ class CommandQueue {
     this._queue = _.reduce(queue, this._agregator);
   }
 }
+
+module.exports = CommandQueue;

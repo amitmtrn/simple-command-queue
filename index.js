@@ -4,27 +4,31 @@ class CommandQueue {
   constructor({initialQueue = [], timing = 2000, agregator = (a) => a, executor: _.noop} = {}) {
     if(!_.isArray(initialQueue)) throw new Error('initialQueue should be array');
 
-    this.queue = initialQueue;
-    this.agregator = agregator;
-    this.executor = executor;
-    this.interval = setInterval(exec.bind(this), timing);
+    this._queue = initialQueue;
+    this._agregator = agregator;
+    this._executor = executor;
+    this._timing = timing;
+
+    setTimeout(this._exec.bind(this), this._timing);
   }
 
-  exec() {
-    if(this.queue.length <= 0) 
+  _exec() {
+    if(this._queue.length <= 0)
       return;
-    
-    this.executor(this.queue.shift());
+
+    this._executor(this._queue.shift());
+
+    setTimeout(this._exec.bind(this), this._timing);
   }
 
   push(item) {
-    this.queue.push(item);
-    this.agragate();
+    this._queue.push(item);
+    this._agragate();
   }
 
-  agregate() {
-    const queue = _.deepClone(this.queue);
+  _agregate() {
+    const queue = _.deepClone(this._queue);
 
-    this.queue = this.agregator(queue);
+    this._queue = this._agregator(queue);
   }
 }

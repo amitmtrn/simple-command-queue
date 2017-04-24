@@ -31,7 +31,7 @@ class CommandQueue {
     if(_.isNull(this._agregator))
       return;
 
-    const queue = _.deepClone(this._queue);
+    const queue = _.cloneDeep(this._queue);
 
     this._queue = _.reduce(queue, this._agregator, []);
   }

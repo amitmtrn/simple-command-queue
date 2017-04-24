@@ -13,10 +13,8 @@ class CommandQueue {
   }
 
   _exec() {
-    if(this._queue.length <= 0)
-      return setTimeout(this._exec.bind(this), this._timing);
-
-    this._executor(this._queue.shift());
+    if(this._queue.length > 0)
+      this._executor(this._queue.shift());
 
     setTimeout(this._exec.bind(this), this._timing);
   }
